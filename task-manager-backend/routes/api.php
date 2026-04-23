@@ -17,4 +17,9 @@ Route::prefix('/auth')->group(function () {
         Route::get('my-account', [AuthController::class, 'myAccount']);
         });
 });
+Route::group(['middleware' => 'auth:api' , 'prefix' => 'tasks'], function () {
+    Route::resource('/', \App\Http\Controllers\TaskController::class);
+    Route::post('/update-status/{id}', [\App\Http\Controllers\TaskController::class, 'toggleStatus']);
+    Route::delete('/bulk-delete', [\App\Http\Controllers\TaskController::class, 'bulkDelete']);
+});
 
