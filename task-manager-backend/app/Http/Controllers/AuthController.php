@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Request;
 
 class AuthController extends Controller
@@ -29,6 +30,11 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
+
+        $user = User::where('email', $credentials['email'])->first();
+        if(!$user || !\Hash::check($credentials['password'], $user->password)) {
+            return response()->json(['message' => 'Invalid email or password'], 401);
+        }
 
         if (! $token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
