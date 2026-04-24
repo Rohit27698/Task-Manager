@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TaskController;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,13 +19,13 @@ Route::prefix('/auth')->group(function () {
         });
 });
 Route::group(['middleware' => 'auth:api' , 'prefix' => 'tasks'], function () {
-    Route::get('/', [\App\Http\Controllers\TaskController::class, 'index']);
-    Route::post('/', [\App\Http\Controllers\TaskController::class, 'store']);
-    Route::get('{id}', [\App\Http\Controllers\TaskController::class, 'show']);
-    Route::put('{id}', [\App\Http\Controllers\TaskController::class, 'update']);
-    Route::patch('{id}', [\App\Http\Controllers\TaskController::class, 'update']);
-    Route::delete('{id}', [\App\Http\Controllers\TaskController::class, 'destroy']);
-    Route::post('update-status/{id}', [\App\Http\Controllers\TaskController::class, 'toggleStatus']);
-    Route::delete('bulk-delete', [\App\Http\Controllers\TaskController::class, 'bulkDelete']);
+    Route::delete('/bulk-delete', [TaskController::class, 'bulkDelete']);
+    Route::post('update-status/{id}', [TaskController::class, 'toggleStatus']);
+    Route::get('/', [TaskController::class, 'index']);
+    Route::post('/', [TaskController::class, 'store']);
+    Route::get('{id}', [TaskController::class, 'show']);
+    Route::put('{id}', [TaskController::class, 'update']);
+    Route::patch('{id}', [TaskController::class, 'update']);
+    Route::delete('{id}', [TaskController::class, 'destroy']);
 });
 

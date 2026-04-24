@@ -24,12 +24,23 @@ const Login = () => {
   useEffect(() => {
     if (isError) {
       toast.error(message);
+      dispatch(reset());
     }
 
     if (isSuccess || user) {
+      toast.success('Login successful!');
       navigate('/dashboard');
     }
   }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        dispatch(reset());
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
