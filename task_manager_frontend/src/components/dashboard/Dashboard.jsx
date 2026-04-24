@@ -45,6 +45,7 @@ const Dashboard = () => {
   };
 
   const handleEditTask = (task) => {
+    dispatch(resetTasks());
     setEditingTask(task);
     setShowTaskForm(true);
   };

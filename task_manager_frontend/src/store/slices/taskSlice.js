@@ -19,6 +19,7 @@ const initialState = {
     filter: '',
     sort: 'desc',
   },
+  viewMode: 'card',
 };
 
 export const getTasks = createAsyncThunk('tasks/getAll', async (params, thunkAPI) => {
@@ -110,6 +111,12 @@ const taskSlice = createSlice({
     },
     clearCurrentTask: (state) => {
       state.currentTask = null;
+    },
+    toggleViewMode: (state) => {
+      state.viewMode = state.viewMode === 'list' ? 'card' : 'list';
+    },
+    setViewMode: (state, action) => {
+      state.viewMode = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -208,5 +215,5 @@ const taskSlice = createSlice({
   },
 });
 
-export const { reset, setFilters, clearCurrentTask } = taskSlice.actions;
+export const { reset, setFilters, clearCurrentTask, toggleViewMode, setViewMode } = taskSlice.actions;
 export default taskSlice.reducer;
