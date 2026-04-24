@@ -18,7 +18,7 @@ class TaskController extends Controller
         $userId = auth('api')->user()->id;
 
         $search = $request->query('search');
-        $limit = $request->query('limit', 10);
+        $limit = $request->query('limit', 6);
         $filter = $request->query('filter');
         $sort = $request->query('sort', 'desc');
 
